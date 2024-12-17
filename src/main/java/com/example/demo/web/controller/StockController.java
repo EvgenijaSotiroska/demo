@@ -5,15 +5,17 @@ import com.example.demo.model.Stock;
 import com.example.demo.service.IssuerService;
 import com.example.demo.service.StockService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/stock")
-@Validated
-@CrossOrigin(origins="*")
+//@Validated
+//@CrossOrigin(origins="*")
 public class StockController {
     private final StockService stockService;
 
@@ -22,9 +24,10 @@ public class StockController {
     }
 
     @GetMapping("/all")
-    public List<Stock> findAll() {
+    public String findAll(Model model) {
         List<Stock> stocks = this.stockService.findAll();
-        return stocks;
+        model.addAttribute("stocks", stocks);
+        return "stocks";
     }
 
     @GetMapping("/{id}")

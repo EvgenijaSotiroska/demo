@@ -4,12 +4,14 @@ import com.example.demo.model.Issuer;
 import com.example.demo.service.IssuerService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/api/issuer")
 @Validated
 @CrossOrigin(origins="*")
@@ -21,9 +23,10 @@ public class IssuerController {
     }
 
     @GetMapping("/all")
-    public List<Issuer> findAll() {
+    public String findAll(Model model) {
         List<Issuer> issuers = this.issuerService.findAll();
-        return issuers;
+        model.addAttribute("issuers", issuers);
+        return "issuersList";
     }
 
     @GetMapping("/{id}")

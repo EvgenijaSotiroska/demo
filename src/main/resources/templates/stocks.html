@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Stock</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
+</head>
+
+<header xmlns:sec="http://www.w3.org/1999/xhtml">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Stock exchange</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
+                <ul class="navbar-nav m-auto">
+                    <li class="nav-item m-auto">
+                        <a class="nav-link active" href="/api/stock/all">Stocks</a>
+                    </li>
+                    <li class="nav-item m-auto">
+                        <a class="nav-link active" href="/api/issuer/all">Issuers</a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h3 class="jumbotron-heading">Stocks</h3>
+        </div>
+    </section>
+
+
+
+
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-12" th:if="${stocks.size() > 0}">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Issuer code</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Last Transaction</th>
+                            <th scope="col">Min</th>
+                            <th scope="col">Max</th>
+                            <th scope="col">Average</th>
+                            <th scope="col">Prom</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Turnover</th>
+                            <th scope="col">TotalTurnover</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="stock : ${stocks}" class="category">
+                            <td th:text="${stock.getCode()}"></td>
+                            <td th:text="${stock.getDate()}"></td>
+                            <td th:text="${stock.getLastTransaction()}"></td>
+                            <td th:text="${stock.getMin()}"></td>
+                            <td th:text="${stock.getMax()}"></td>
+                            <td th:text="${stock.getAverage()}"></td>
+                            <td th:text="${stock.getProm()}"></td>
+                            <td th:text="${stock.getQuantity()}"></td>
+                            <td th:text="${stock.getTurnover()}"></td>
+                            <td th:text="${stock.getTotalTurnover()}"></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+</body>
+</html>
