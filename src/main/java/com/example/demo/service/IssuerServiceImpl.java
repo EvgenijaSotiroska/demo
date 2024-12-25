@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Issuer;
 import com.example.demo.repository.IssuerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

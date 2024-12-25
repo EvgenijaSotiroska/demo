@@ -6,68 +6,40 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name = "STOCK_DATABASE")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Stock implements Serializable {
+public class Stock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String code;
-    private String date;
-    private String lastTransaction;
-    private String average;
-    private String max;
-    private String min;
-    private String prom;
-    private int quantity;
-    private String turnover;
-    private String totalTurnover;
+    private LocalDate date;
+    private Double lastTransaction;
+    private Double average;
+    private Double max;
+    private Double min;
+    private Double prom;
+    private Integer quantity;
+    private Integer turnover;
+    private Integer totalTurnover;
 
-    public String getAverage() {
-        return average;
-    }
+    @ManyToOne
+    @JoinColumn(name = "issuer_id")
+    private Issuer issuer;
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getLastTransaction() {
-        return lastTransaction;
-    }
-
-    public String getMax() {
-        return max;
-    }
-
-    public String getMin() {
-        return min;
-    }
-
-    public String getProm() {
-        return prom;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public String getTotalTurnover() {
-        return totalTurnover;
-    }
-
-    public String getTurnover() {
-        return turnover;
+    public Stock(LocalDate date, Double lastTransactionPrice, Double maxPrice, Double minPrice, Double averagePrice, Double percentageChange, Integer quantity, Integer turnoverBest, Integer totalTurnover) {
+        this.date = date;
+        this.lastTransaction = lastTransactionPrice;
+        this.max = maxPrice;
+        this.min = minPrice;
+        this.average = averagePrice;
+        this.prom = percentageChange;
+        this.quantity = quantity;
+        this.turnover = turnoverBest;
+        this.totalTurnover = totalTurnover;
     }
 }
