@@ -13,25 +13,31 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class Initializr {
+public class Initializer {
 
-    private final IssuerRepository IssuerRepository;
+    private final IssuerRepository issuerRepository;
     private final StockRepository stockRepository;
+
 
     @PostConstruct
     private void initializeData() throws IOException, ParseException {
        long startTime = System.nanoTime();
 
-        Pipe<List<Issuer>> pipe = new Pipe<>();
-        pipe.addFilter(new FilterOne(IssuerRepository));
-        pipe.addFilter(new FilterTwo(IssuerRepository, stockRepository));
-        pipe.addFilter(new FilterThree(IssuerRepository, stockRepository));
-        pipe.runFilter(null);
-
+        try {
+            Pipe<List<Issuer>> pipe = new Pipe<>();
+            pipe.addFilter(new FilterOne(issuerRepository));
+            pipe.addFilter(new FilterTwo(issuerRepository, stockRepository));
+            pipe.addFilter(new FilterThree(issuerRepository, stockRepository));
+            pipe.runFilter(new ArrayList<>());
+        } catch (IOException | ParseException e) {
+            System.err.println("Error initializing data: " + e.getMessage());
+            e.printStackTrace();
+        }
         long endTime = System.nanoTime();
         long durationInMillis = (endTime - startTime) / 1_000_000;
 
@@ -39,7 +45,7 @@ public class Initializr {
         long minutes = (durationInMillis % 3_600_000) / 60_000;
         long seconds = (durationInMillis % 60_000) / 1_000;
 
-        System.out.printf("Total time for all filters to complete: %02d hours, %02d minutes, %02d seconds%n", hours, minutes, seconds);
+        System.out.printf("Total time: %02d hours, %02d minutes, %02d seconds%n", hours, minutes, seconds);
     }
 
 }

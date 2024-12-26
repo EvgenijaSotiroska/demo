@@ -15,6 +15,7 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/e59232f0a1.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <header xmlns:sec="http://www.w3.org/1999/xhtml">
@@ -47,25 +48,28 @@
             <h3 class="jumbotron-heading">Issuers</h3>
         </div>
     </section>
-    <div class="container mb-4">
-        <div class="row">
-            <div class="col-12" th:if="${issuers.size() > 0}">
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">Issuer id</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="issuer : ${issuers}" class="category">
-                            <td th:text="${issuer.getCode()}"></td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card p-4 shadow-lg" style="width: 400px;">
+            <h4 class="card-title text-center mb-4">Select a Issuer</h4>
+            <form method="get" action="/issuer_stocks">
+                <div class="mb-3">
+                    <label for="companyId" class="form-label">Issuer</label>
+                    <select
+                            id="companyId"
+                            name="companyId"
+                            class="form-select"
+                            required>
+                        <option th:each="issuer : ${issuers}"
+                                th:value="${issuer.id}"
+                                th:text="${issuer.companyCode}"></option>
+                    </select>
                 </div>
-            </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
